@@ -1,0 +1,171 @@
+
+/* ================================
+   APACHE SUPERSET - LIGHT THEME
+   Black buttons accent style
+   Font: Segoe UI
+   ================================ */
+
+/* GLOBAL */
+body,
+.dashboard,
+.superset-legacy-chart {
+    font-family: "Segoe UI", sans-serif !important;
+}
+
+/* MAIN BACKGROUND (LIGHT MODE) */
+.dashboard-content,
+.dashboard {
+    background: #f5f5f5 !important;
+    color: #1a1a1a !important;
+}
+
+/* HEADER */
+.dashboard-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #d0d0d0 !important;
+}
+
+.dashboard-header h1,
+.dashboard-header span {
+    color: #111111 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* CHART CONTAINERS */
+.dashboard-component-chart-holder,
+.chart-container,
+.slice_container,
+.dragdroppable-row {
+    background: #ffffff !important;
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* CHART HEADERS */
+.chart-header,
+.dashboard-chart-title {
+    background: #fafafa !important;
+    color: #111111 !important;
+    border-bottom: 1px solid #d9d9d9 !important;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* FILTER BOXES */
+.filter-box,
+.ant-card {
+    background: #ffffff !important;
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 0 !important;
+}
+
+/* INPUTS */
+.ant-select-selector,
+.ant-input,
+.ant-picker {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #cccccc !important;
+    border-radius: 0 !important;
+}
+
+/* TABLES */
+table {
+    background: #ffffff !important;
+    color: #111111 !important;
+}
+
+th {
+    background: #f0f0f0 !important;
+    color: #111111 !important;
+    border-bottom: 2px solid #cccccc !important;
+    text-transform: uppercase;
+}
+
+td {
+    border-bottom: 1px solid #eeeeee !important;
+}
+
+tr:hover td {
+    background: #f7f7f7 !important;
+}
+
+/* LINKS */
+a {
+    color: #333333 !important;
+}
+
+a:hover {
+    color: #000000 !important;
+}
+
+/* ======================================
+   🔲 BLACK BUTTONS (PRIMARY DESIGN RULE)
+   ====================================== */
+
+button,
+.ant-btn {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+button:hover,
+.ant-btn:hover {
+    background: #222222 !important;
+    border-color: #000000 !important;
+}
+
+/* PRIMARY ACTION BUTTONS */
+.ant-btn-primary {
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
+    color: #ffffff !important;
+}
+
+/* DROPDOWNS */
+.ant-select-dropdown {
+    background: #ffffff !important;
+}
+
+.ant-select-item {
+    color: #111111 !important;
+}
+
+.ant-select-item-option-active {
+    background: #f0f0f0 !important;
+}
+
+.ant-select-item-option-selected {
+    background: #e6e6e6 !important;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #222222;
+}
+
+/* REMOVE SOFT DESIGN */
+* {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
