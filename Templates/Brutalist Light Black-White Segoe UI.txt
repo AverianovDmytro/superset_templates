@@ -1,9 +1,8 @@
 
-/* ================================
-   APACHE SUPERSET - LIGHT THEME
-   Black buttons accent style
-   Font: Segoe UI
-   ================================ */
+/* ======================================
+   SUPERSET - COMPETITIVE LIGHT THEME
+   Gray UI + Safe Controls
+   ====================================== */
 
 /* GLOBAL */
 body,
@@ -12,17 +11,17 @@ body,
     font-family: "Segoe UI", sans-serif !important;
 }
 
-/* MAIN BACKGROUND (LIGHT MODE) */
+/* MAIN BACKGROUND */
 .dashboard-content,
 .dashboard {
     background: #f5f5f5 !important;
-    color: #1a1a1a !important;
+    color: #1f1f1f !important;
 }
 
 /* HEADER */
 .dashboard-header {
     background: #ffffff !important;
-    border-bottom: 1px solid #d0d0d0 !important;
+    border-bottom: 1px solid #d9d9d9 !important;
 }
 
 .dashboard-header h1,
@@ -39,26 +38,26 @@ body,
 .slice_container,
 .dragdroppable-row {
     background: #ffffff !important;
-    border: 1px solid #d9d9d9 !important;
+    border: 1px solid #e0e0e0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
 }
 
-/* CHART HEADERS */
+/* CHART HEADER */
 .chart-header,
 .dashboard-chart-title {
     background: #fafafa !important;
     color: #111111 !important;
-    border-bottom: 1px solid #d9d9d9 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-/* FILTER BOXES */
+/* FILTERS */
 .filter-box,
 .ant-card {
     background: #ffffff !important;
-    border: 1px solid #d9d9d9 !important;
+    border: 1px solid #e0e0e0 !important;
     border-radius: 0 !important;
 }
 
@@ -79,9 +78,9 @@ table {
 }
 
 th {
-    background: #f0f0f0 !important;
+    background: #f3f3f3 !important;
     color: #111111 !important;
-    border-bottom: 2px solid #cccccc !important;
+    border-bottom: 2px solid #d0d0d0 !important;
     text-transform: uppercase;
 }
 
@@ -103,30 +102,58 @@ a:hover {
 }
 
 /* ======================================
-   🔲 BLACK BUTTONS (PRIMARY DESIGN RULE)
+   BUTTONS (GRAY - SAFE, NO BREAKAGE)
    ====================================== */
 
-button,
-.ant-btn {
-    background: #000000 !important;
+.ant-btn,
+.ant-btn-default {
+    background: #6f6f6f !important;
     color: #ffffff !important;
-    border: 1px solid #000000 !important;
+    border: 1px solid #6f6f6f !important;
     border-radius: 0 !important;
     font-weight: 600;
-    text-transform: uppercase;
 }
 
-button:hover,
-.ant-btn:hover {
-    background: #222222 !important;
-    border-color: #000000 !important;
+.ant-btn:hover,
+.ant-btn-default:hover {
+    background: #5a5a5a !important;
+    border-color: #5a5a5a !important;
 }
 
-/* PRIMARY ACTION BUTTONS */
+/* PRIMARY BUTTON */
 .ant-btn-primary {
-    background: #000000 !important;
-    border: 1px solid #000000 !important;
+    background: #5f5f5f !important;
+    border: 1px solid #5f5f5f !important;
     color: #ffffff !important;
+}
+
+.ant-btn-primary:hover {
+    background: #4d4d4d !important;
+    border-color: #4d4d4d !important;
+}
+
+/* ======================================
+   RESTORE "..." MENU / ACTION BUTTONS
+   ====================================== */
+
+.ant-dropdown-trigger,
+.dashboard-component-header button,
+.chart-header button,
+[aria-label*="menu"],
+[aria-label*="Menu"],
+[aria-label*="action"],
+[aria-label*="Action"],
+[role="button"] svg {
+    background: transparent !important;
+    color: #666666 !important;
+    border: none !important;
+}
+
+.ant-dropdown-trigger:hover,
+.dashboard-component-header button:hover,
+.chart-header button:hover {
+    background: #eeeeee !important;
+    color: #111111 !important;
 }
 
 /* DROPDOWNS */
@@ -157,15 +184,14 @@ button:hover,
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #000000;
+    background: #6f6f6f;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #222222;
+    background: #4d4d4d;
 }
 
-/* REMOVE SOFT DESIGN */
+/* SAFE RESET (DO NOT BREAK ICON BUTTONS) */
 * {
-    border-radius: 0 !important;
     box-shadow: none !important;
 }
