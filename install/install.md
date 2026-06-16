@@ -11,7 +11,19 @@
 5432 open																									
 # Fire up Superset using Docker Compose																								
 docker-compose-plugin																						
-$ TAG=6.1.0 docker compose -f docker-compose-image-tag.yml up		sudo snap install docker
+docker/.env or docker/.env-local
+echo "SUPERSET_LOAD_EXAMPLES=no" > /home/ada/superset/docker/.env-local
+
+
+$ TAG=6.1.0 docker compose -f docker-compose-image-tag.yml up -d
+
+# Instead of "down":
+TAG=6.1.0 docker compose -f docker-compose-image-tag.yml stop
+
+# Instead of "up" again:
+TAG=6.1.0 docker compose -f docker-compose-image-tag.yml start
+
+//sudo snap install docker
 
 	superset/docker/pythonpath_dev/superset_config.py	APP_NAME = "SUPERSET"																							
 		LOGO_RIGHT_TEXT = "Betrieb"																							
