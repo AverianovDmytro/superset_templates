@@ -1,0 +1,8 @@
+Install
+TAG=6.1.0 docker compose -f docker-compose-image-tag.yml up -d
+Stop
+TAG=6.1.0 docker compose -f docker-compose-image-tag.yml stop
+Start
+TAG=6.1.0 docker compose -f docker-compose-image-tag.yml start
+Delete
+TAG=6.1.0 docker compose -f docker-compose-image-tag.yml down
