@@ -1,0 +1,294 @@
+/* ==========================================================================
+   SUPERSET - GRAIN LOGISTICS & TRANSPORT THEME
+   Deep Maritime Blues, Barley Gold, Silo Grays, and Soft Cream Backgrounds
+   ========================================================================== */
+
+/* ── PALETTE REFERENCE ─────────────────────────────────────────────────────
+   Soft Cream Bg:     #FDFBF7 (Clean tracking surface)
+   Pure White Card:   #FFFFFF (High contrast for charts)
+   Maritime Blue:     #1E3A8A (Primary brand, structural headers)
+   Ocean Blue Light:  #EFF6FF (Hover states and active tabs)
+   Barley Gold:       #EAB308 (Accent, primary buttons, indicators)
+   Golden Deep:       #CA8A04 (Button hovers, focus states)
+   Silo Gray-Blue:    #64748B (Secondary text, borders)
+   Text Dark:         #0F172A (Deep navy-black for maximum legibility)
+   Border Light:      #E2E8F0 (Clean grid lines)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* GLOBAL & TYPOGRAPHY */
+body,
+.dashboard,
+.superset-legacy-chart,
+.ant-btn,
+.ant-tabs-tab,
+.ant-modal-title,
+.ant-tooltip-inner {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* MAIN BACKGROUND */
+.dashboard-content,
+.dashboard {
+    background: #FDFBF7 !important;
+    color: #0F172A !important;
+}
+
+/* HEADER */
+.dashboard-header {
+    background: #FFFFFF !important;
+    border-bottom: 3px solid #1E3A8A !important;
+}
+
+.dashboard-header h1,
+.dashboard-header span {
+    color: #1E3A8A !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.3px;
+}
+
+/* CHART CONTAINERS */
+.dashboard-component-chart-holder,
+.chart-container,
+.slice_container,
+.dragdroppable-row {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+}
+
+/* CHART HEADER */
+.chart-header,
+.dashboard-chart-title {
+    background: #EFF6FF !important;
+    color: #1E3A8A !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    font-weight: 600 !important;
+}
+
+/* FILTERS & ANTD CARDS */
+.filter-box,
+.ant-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+}
+
+/* INPUTS (Dropdowns, Datepickers, Forms) */
+.ant-select-selector,
+.ant-input,
+.ant-picker {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 6px !important;
+}
+
+.ant-select-selector:hover,
+.ant-input:hover,
+.ant-picker:hover {
+    border-color: #1E3A8A !important;
+}
+
+.ant-select-selector:focus-within,
+.ant-input:focus,
+.ant-picker-focused {
+    border-color: #1E3A8A !important;
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15) !important;
+}
+
+/* TABLES (Fleet Lists, Cargo Manifests) */
+table {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+}
+
+th {
+    background: #1E3A8A !important;
+    color: #FFFFFF !important;
+    border-bottom: 2px solid #CA8A04 !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+    padding: 12px 8px !important;
+}
+
+td {
+    border-bottom: 1px solid #E2E8F0 !important;
+    color: #0F172A !important;
+}
+
+tr:hover td {
+    background: #EFF6FF !important; /* Soft tracking highlight */
+}
+
+/* LINKS */
+a {
+    color: #1E3A8A !important;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #EAB308 !important;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   BUTTONS – BARLEY GOLD (Action Orientated)
+   ========================================================================== */
+
+.ant-btn,
+.ant-btn-default {
+    background: #EAB308 !important;
+    color: #0F172A !important;
+    border: 1px solid #CA8A04 !important;
+    border-radius: 6px !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.ant-btn:hover,
+.ant-btn-default:hover {
+    background: #CA8A04 !important;
+    border-color: #A16207 !important;
+    color: #FFFFFF !important;
+}
+
+/* PRIMARY BUTTON (Run Query / Save) */
+.ant-btn-primary {
+    background: #1E3A8A !important;
+    border: 1px solid #172554 !important;
+    color: #FFFFFF !important;
+}
+
+.ant-btn-primary:hover {
+    background: #1D4ED8 !important;
+    border-color: #1E3A8A !important;
+    color: #FFFFFF !important;
+}
+
+/* ==========================================================================
+   SUPERSET UI SPECIFICS (Menus, Dropdowns, Toggles)
+   ========================================================================== */
+
+/* Restore context menus & "..." buttons */
+.ant-dropdown-trigger,
+.dashboard-component-header button,
+.chart-header button,
+[aria-label*="menu"],
+[aria-label*="Menu"],
+[aria-label*="action"],
+[aria-label*="Action"],
+[role="button"] svg {
+    background: transparent !important;
+    color: #64748B !important;
+    border: none !important;
+}
+
+.ant-dropdown-trigger:hover,
+.dashboard-component-header button:hover,
+.chart-header button:hover {
+    background: #EFF6FF !important;
+    color: #1E3A8A !important;
+}
+
+/* DROPDOWN MENUS */
+.ant-select-dropdown {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+}
+
+.ant-select-item {
+    color: #0F172A !important;
+}
+
+.ant-select-item-option-active {
+    background: #EFF6FF !important;
+}
+
+.ant-select-item-option-selected {
+    background: #1E3A8A !important;
+    color: #FFFFFF !important;
+    font-weight: 600;
+}
+
+/* TOOLTIPS & MAP POPUPS */
+.ant-tooltip-inner {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-radius: 6px !important;
+}
+
+.ant-tooltip-arrow-content {
+    background: #0F172A !important;
+}
+
+/* TABS (Logistics Views switching) */
+.ant-tabs-tab {
+    color: #64748B !important;
+    font-weight: 500;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #1E3A8A !important;
+    font-weight: 700;
+}
+
+.ant-tabs-ink-bar {
+    background: #1E3A8A !important;
+    height: 3px !important;
+}
+
+.ant-tabs-nav {
+    border-bottom: 2px solid #E2E8F0 !important;
+}
+
+/* MODAL WINDOWS */
+.ant-modal-content {
+    background: #FFFFFF !important;
+    border-radius: 12px !important;
+}
+
+.ant-modal-header {
+    background: #EFF6FF !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.ant-modal-title {
+    color: #1E3A8A !important;
+    font-weight: 700;
+}
+
+/* MODERN SCROLLBARS */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FDFBF7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748B;
+}
+
+/* CLEAN SHADOW HANDLING */
+* {
+    box-shadow: none !important;
+}
+
+.dashboard-component-chart-holder,
+.ant-card,
+.ant-modal-content {
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03) !important;
+}
