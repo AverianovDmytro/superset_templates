@@ -1,0 +1,294 @@
+/* ======================================
+   SUPERSET - PROVENCE LIGHT THEME
+   Warm Yellows, Lavender Accents,
+   Cream Backgrounds & Soft Terracotta
+   ====================================== */
+
+/* ── PALETTE (reference)
+   Cream bg:        #FDF6E3
+   Warm card:       #FFF8ED
+   Sunflower:       #E8B84B
+   Golden deep:     #C9891A
+   Lavender:        #9B89B0
+   Lavender dark:   #7B6EA3
+   Sage:            #8FAF7E
+   Terracotta:      #C97D4E
+   Text dark:       #3D2B1F
+   Text mid:        #6B5040
+   Border:          #E8D8B0
+   ──────────────────────────────────── */
+
+/* GLOBAL */
+body,
+.dashboard,
+.superset-legacy-chart {
+    font-family: "Georgia", "Palatino Linotype", serif !important;
+}
+
+/* MAIN BACKGROUND */
+.dashboard-content,
+.dashboard {
+    background: #FDF6E3 !important;
+    color: #3D2B1F !important;
+}
+
+/* HEADER */
+.dashboard-header {
+    background: #FFF8ED !important;
+    border-bottom: 2px solid #E8B84B !important;
+}
+
+.dashboard-header h1,
+.dashboard-header span {
+    color: #3D2B1F !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+}
+
+/* CHART CONTAINERS */
+.dashboard-component-chart-holder,
+.chart-container,
+.slice_container,
+.dragdroppable-row {
+    background: #FFF8ED !important;
+    border: 1px solid #E8D8B0 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(200, 150, 60, 0.08) !important;
+}
+
+/* CHART HEADER */
+.chart-header,
+.dashboard-chart-title {
+    background: #FFF1CE !important;
+    color: #3D2B1F !important;
+    border-bottom: 1px solid #E8D8B0 !important;
+    font-weight: 600;
+}
+
+/* FILTERS */
+.filter-box,
+.ant-card {
+    background: #FFF8ED !important;
+    border: 1px solid #E8D8B0 !important;
+    border-radius: 6px !important;
+}
+
+/* INPUTS */
+.ant-select-selector,
+.ant-input,
+.ant-picker {
+    background: #FFFDF5 !important;
+    color: #3D2B1F !important;
+    border: 1px solid #D4B87A !important;
+    border-radius: 4px !important;
+}
+
+.ant-select-selector:hover,
+.ant-input:hover,
+.ant-picker:hover {
+    border-color: #E8B84B !important;
+}
+
+.ant-select-selector:focus-within,
+.ant-input:focus,
+.ant-picker-focused {
+    border-color: #C9891A !important;
+    box-shadow: 0 0 0 2px rgba(232, 184, 75, 0.2) !important;
+}
+
+/* TABLES */
+table {
+    background: #FFF8ED !important;
+    color: #3D2B1F !important;
+}
+
+th {
+    background: #FFF1CE !important;
+    color: #6B5040 !important;
+    border-bottom: 2px solid #E8B84B !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+td {
+    border-bottom: 1px solid #F0E4C2 !important;
+    color: #3D2B1F !important;
+}
+
+tr:hover td {
+    background: #FFF5D9 !important;
+}
+
+/* LINKS */
+a {
+    color: #C9891A !important;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #9B89B0 !important;
+    text-decoration: underline;
+}
+
+/* ======================================
+   BUTTONS – SUNFLOWER / WARM GOLD
+   ====================================== */
+
+.ant-btn,
+.ant-btn-default {
+    background: #E8B84B !important;
+    color: #3D2B1F !important;
+    border: 1px solid #D4A030 !important;
+    border-radius: 4px !important;
+    font-weight: 600;
+    font-family: "Georgia", serif !important;
+    transition: background 0.2s;
+}
+
+.ant-btn:hover,
+.ant-btn-default:hover {
+    background: #D4A030 !important;
+    border-color: #C9891A !important;
+    color: #3D2B1F !important;
+}
+
+/* PRIMARY BUTTON */
+.ant-btn-primary {
+    background: #C9891A !important;
+    border: 1px solid #B07010 !important;
+    color: #FFF8ED !important;
+}
+
+.ant-btn-primary:hover {
+    background: #B07010 !important;
+    border-color: #8A560C !important;
+    color: #FFF8ED !important;
+}
+
+/* ======================================
+   RESTORE "..." MENU / ACTION BUTTONS
+   ====================================== */
+
+.ant-dropdown-trigger,
+.dashboard-component-header button,
+.chart-header button,
+[aria-label*="menu"],
+[aria-label*="Menu"],
+[aria-label*="action"],
+[aria-label*="Action"],
+[role="button"] svg {
+    background: transparent !important;
+    color: #9B89B0 !important;
+    border: none !important;
+}
+
+.ant-dropdown-trigger:hover,
+.dashboard-component-header button:hover,
+.chart-header button:hover {
+    background: #FFF1CE !important;
+    color: #C9891A !important;
+}
+
+/* DROPDOWNS */
+.ant-select-dropdown {
+    background: #FFF8ED !important;
+    border: 1px solid #E8D8B0 !important;
+    border-radius: 4px !important;
+}
+
+.ant-select-item {
+    color: #3D2B1F !important;
+}
+
+.ant-select-item-option-active {
+    background: #FFF1CE !important;
+}
+
+.ant-select-item-option-selected {
+    background: #FFE49A !important;
+    color: #3D2B1F !important;
+    font-weight: 600;
+}
+
+/* TOOLTIPS */
+.ant-tooltip-inner {
+    background: #3D2B1F !important;
+    color: #FFF8ED !important;
+    border-radius: 4px !important;
+    font-family: "Georgia", serif !important;
+}
+
+.ant-tooltip-arrow-content {
+    background: #3D2B1F !important;
+}
+
+/* TABS */
+.ant-tabs-tab {
+    color: #6B5040 !important;
+    font-family: "Georgia", serif !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #C9891A !important;
+    font-weight: 700;
+}
+
+.ant-tabs-ink-bar {
+    background: #E8B84B !important;
+}
+
+.ant-tabs-nav {
+    border-bottom: 1px solid #E8D8B0 !important;
+}
+
+/* MODAL */
+.ant-modal-content {
+    background: #FFF8ED !important;
+    border: 1px solid #E8D8B0 !important;
+    border-radius: 8px !important;
+}
+
+.ant-modal-header {
+    background: #FFF1CE !important;
+    border-bottom: 1px solid #E8B84B !important;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.ant-modal-title {
+    color: #3D2B1F !important;
+    font-family: "Georgia", serif !important;
+    font-weight: 700;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FDF6E3;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D4B87A;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #C9891A;
+}
+
+/* SAFE RESET */
+* {
+    box-shadow: none !important;
+}
+
+/* RE-ALLOW SUBTLE CARD SHADOW AFTER RESET */
+.dashboard-component-chart-holder,
+.ant-card,
+.ant-modal-content {
+    box-shadow: 0 2px 8px rgba(200, 150, 60, 0.10) !important;
+}
