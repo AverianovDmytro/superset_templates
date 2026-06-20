@@ -1,19 +1,7 @@
 /* ==========================================================================
-   SUPERSET - GRAIN LOGISTICS & TRANSPORT THEME
+   SUPERSET - GRAIN LOGISTICS & TRANSPORT THEME (COMPACT VERSION)
    Deep Maritime Blues, Barley Gold, Silo Grays, and Soft Cream Backgrounds
    ========================================================================== */
-
-/* ── PALETTE REFERENCE ─────────────────────────────────────────────────────
-   Soft Cream Bg:     #FDFBF7 (Clean tracking surface)
-   Pure White Card:   #FFFFFF (High contrast for charts)
-   Maritime Blue:     #1E3A8A (Primary brand, structural headers)
-   Ocean Blue Light:  #EFF6FF (Hover states and active tabs)
-   Barley Gold:       #EAB308 (Accent, primary buttons, indicators)
-   Golden Deep:       #CA8A04 (Button hovers, focus states)
-   Silo Gray-Blue:    #64748B (Secondary text, borders)
-   Text Dark:         #0F172A (Deep navy-black for maximum legibility)
-   Border Light:      #E2E8F0 (Clean grid lines)
-   ────────────────────────────────────────────────────────────────────────── */
 
 /* GLOBAL & TYPOGRAPHY */
 body,
@@ -23,7 +11,7 @@ body,
 .ant-tabs-tab,
 .ant-modal-title,
 .ant-tooltip-inner {
-    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif !important;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif !important;
 }
 
 /* MAIN BACKGROUND */
@@ -33,36 +21,44 @@ body,
     color: #0F172A !important;
 }
 
-/* HEADER */
+/* COMPACT HEADER */
 .dashboard-header {
     background: #FFFFFF !important;
-    border-bottom: 3px solid #1E3A8A !important;
+    border-bottom: 2px solid #1E3A8A !important;
+    padding: 4px 12px !important; /* Minimized vertical padding */
+    min-height: 40px !important;
 }
 
 .dashboard-header h1,
 .dashboard-header span {
     color: #1E3A8A !important;
     font-weight: 700 !important;
+    font-size: 18px !important; /* Smaller, precise header font */
     letter-spacing: -0.3px;
+    margin: 0 !important;
 }
 
-/* CHART CONTAINERS */
+/* COMPACT CHART CONTAINERS */
 .dashboard-component-chart-holder,
 .chart-container,
 .slice_container,
 .dragdroppable-row {
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    border-radius: 8px !important;
+    border-radius: 4px !important;
+    padding: 4px !important; /* Tight internal alignment margins */
 }
 
-/* CHART HEADER */
+/* COMPACT CHART HEADER */
 .chart-header,
 .dashboard-chart-title {
     background: #EFF6FF !important;
     color: #1E3A8A !important;
     border-bottom: 1px solid #E2E8F0 !important;
     font-weight: 600 !important;
+    font-size: 13px !important;
+    padding: 4px 8px !important; /* Reduced size */
+    line-height: 1.2 !important;
 }
 
 /* FILTERS & ANTD CARDS */
@@ -70,17 +66,22 @@ body,
 .ant-card {
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    border-radius: 8px !important;
+    border-radius: 4px !important;
+}
+.ant-card-body {
+    padding: 8px !important; /* Reduced native padding inside container cards */
 }
 
-/* INPUTS (Dropdowns, Datepickers, Forms) */
+/* COMPACT INPUTS */
 .ant-select-selector,
 .ant-input,
 .ant-picker {
     background: #FFFFFF !important;
     color: #0F172A !important;
     border: 1px solid #CBD5E1 !important;
-    border-radius: 6px !important;
+    border-radius: 4px !important;
+    height: 28px !important; /* Forces inputs to look short and neat */
+    padding: 2px 6px !important;
 }
 
 .ant-select-selector:hover,
@@ -93,10 +94,10 @@ body,
 .ant-input:focus,
 .ant-picker-focused {
     border-color: #1E3A8A !important;
-    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15) !important;
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1) !important;
 }
 
-/* TABLES (Fleet Lists, Cargo Manifests) */
+/* MAX-COMPRESSION DATA TABLES */
 table {
     background: #FFFFFF !important;
     color: #0F172A !important;
@@ -108,18 +109,20 @@ th {
     border-bottom: 2px solid #CA8A04 !important;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.85em;
-    letter-spacing: 0.5px;
-    padding: 12px 8px !important;
+    font-size: 0.8em;
+    letter-spacing: 0.3px;
+    padding: 6px 6px !important; /* 50% Reduction */
 }
 
 td {
     border-bottom: 1px solid #E2E8F0 !important;
     color: #0F172A !important;
+    padding: 5px 6px !important; /* Tiny row footprint */
+    font-size: 12px !important;
 }
 
 tr:hover td {
-    background: #EFF6FF !important; /* Soft tracking highlight */
+    background: #EFF6FF !important;
 }
 
 /* LINKS */
@@ -134,18 +137,17 @@ a:hover {
     text-decoration: underline;
 }
 
-/* ==========================================================================
-   BUTTONS – BARLEY GOLD (Action Orientated)
-   ========================================================================== */
-
+/* COMPACT BUTTONS */
 .ant-btn,
 .ant-btn-default {
     background: #EAB308 !important;
     color: #0F172A !important;
     border: 1px solid #CA8A04 !important;
-    border-radius: 6px !important;
+    border-radius: 4px !important;
     font-weight: 600;
-    transition: all 0.2s ease;
+    height: 26px !important;
+    padding: 2px 10px !important;
+    font-size: 12px !important;
 }
 
 .ant-btn:hover,
@@ -155,7 +157,6 @@ a:hover {
     color: #FFFFFF !important;
 }
 
-/* PRIMARY BUTTON (Run Query / Save) */
 .ant-btn-primary {
     background: #1E3A8A !important;
     border: 1px solid #172554 !important;
@@ -168,11 +169,7 @@ a:hover {
     color: #FFFFFF !important;
 }
 
-/* ==========================================================================
-   SUPERSET UI SPECIFICS (Menus, Dropdowns, Toggles)
-   ========================================================================== */
-
-/* Restore context menus & "..." buttons */
+/* SUPERSET UI SPECIFICS (Menus & Actions) */
 .ant-dropdown-trigger,
 .dashboard-component-header button,
 .chart-header button,
@@ -197,12 +194,12 @@ a:hover {
 .ant-select-dropdown {
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    border-radius: 6px !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+    border-radius: 4px !important;
 }
 
 .ant-select-item {
     color: #0F172A !important;
+    padding: 4px 8px !important; /* Lean menu choices */
 }
 
 .ant-select-item-option-active {
@@ -219,17 +216,19 @@ a:hover {
 .ant-tooltip-inner {
     background: #0F172A !important;
     color: #FFFFFF !important;
-    border-radius: 6px !important;
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
 }
 
 .ant-tooltip-arrow-content {
     background: #0F172A !important;
 }
 
-/* TABS (Logistics Views switching) */
+/* TABS */
 .ant-tabs-tab {
     color: #64748B !important;
     font-weight: 500;
+    padding: 6px 12px !important; /* Compressed view control tabs */
 }
 
 .ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -239,56 +238,9 @@ a:hover {
 
 .ant-tabs-ink-bar {
     background: #1E3A8A !important;
-    height: 3px !important;
+    height: 2px !important;
 }
 
 .ant-tabs-nav {
-    border-bottom: 2px solid #E2E8F0 !important;
-}
-
-/* MODAL WINDOWS */
-.ant-modal-content {
-    background: #FFFFFF !important;
-    border-radius: 12px !important;
-}
-
-.ant-modal-header {
-    background: #EFF6FF !important;
     border-bottom: 1px solid #E2E8F0 !important;
-    border-radius: 12px 12px 0 0 !important;
-}
-
-.ant-modal-title {
-    color: #1E3A8A !important;
-    font-weight: 700;
-}
-
-/* MODERN SCROLLBARS */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #FDFBF7;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #64748B;
-}
-
-/* CLEAN SHADOW HANDLING */
-* {
-    box-shadow: none !important;
-}
-
-.dashboard-component-chart-holder,
-.ant-card,
-.ant-modal-content {
-    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -2px rgba(15, 23, 42, 0.03) !important;
-}
+    margin-bottom: 8px !important;
