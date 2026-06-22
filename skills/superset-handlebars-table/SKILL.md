@@ -73,24 +73,56 @@ Arrows, dashes, umlauts — use entities to avoid encoding issues:
 | ▶ | `&#9654;` |
 | — | `&#8212;` |
 | ≥ | `&#8805;` |
+| Σ | `&#931;` |
 | ü | `&#252;` |
 | · | `&#183;` |
+
+### 8. `{{#if}}` only for class names and text — never wrapping HTML elements
+
+This is the most subtle rule. In Superset's Handlebars, `{{#if}}` used as a
+block wrapper around `<div>` or `<span>` elements causes those elements to
+render as raw HTML text. `{{#unless}}` is also not supported.
+
+**Broken — causes raw HTML output:**
+```handlebars
+{{#if (eq fisc_month "99 Gesamt")}}
+<div class="tbl-total">...</div>
+{{else}}
+<div class="tbl-row">...</div>
+{{/if}}
+```
+
+**Correct — `{{#if}}` only inside attributes and text nodes:**
+```handlebars
+<div class="tbl-row {{#if (eq fisc_month "99 Gesamt")}}tbl-total{{/if}}">
+  <span class="{{#if (eq ...)}}total-label{{else}}month{{/if}}">
+    {{#if (eq fisc_month "99 Gesamt")}}&#931; Gesamt{{else}}{{fisc_month}}{{/if}}
+  </span>
+  <span class="arr {{#if (gte a b)}}up{{else}}dn{{/if}}">
+    {{#if (gte a b)}}&#9650;{{else}}&#9660;{{/if}}
+  </span>
+</div>
+```
+
+The rule: every `{{#if}}` block must produce **only text** (class names,
+entities, values) — never open or close an HTML tag.
 
 ---
 
 ## Step 1 — Virtual Dataset SQL
 
-Pre-compute all derived columns (plan, deviation, CSS class) in SQL so the
-Handlebars template stays logic-free. Use a Virtual Dataset in Superset
+Pre-compute all derived columns (plan, deviation) in SQL so the Handlebars
+template stays logic-free. Use a Virtual Dataset in Superset
 (Datasets → + Dataset → Write SQL query).
+
+### Basic monthly aggregation
 
 ```sql
 WITH base AS (
     SELECT
           date
-        , <your columns...>
+        , feed_tons, oil_tons, meal_tons
 
-        -- Fiscal year: Sep–Aug cycle
         , CASE
             WHEN EXTRACT(MONTH FROM date) >= 9
                 THEN TO_CHAR(date, 'YY') || '-' || TO_CHAR(date + INTERVAL '1 year', 'YY')
@@ -98,7 +130,6 @@ WITH base AS (
                 TO_CHAR(date - INTERVAL '1 year', 'YY') || '-' || TO_CHAR(date, 'YY')
           END AS fisc_year
 
-        -- Fiscal month sort key (Sep=01 … Aug=12)
         , LPAD(
             (CASE
                 WHEN EXTRACT(MONTH FROM date) >= 9
@@ -107,7 +138,6 @@ WITH base AS (
              END)::text, 2, '0'
           ) || ' ' || TO_CHAR(date, 'Mon') AS fisc_month
 
-        -- Days in calendar month (for plan calculation)
         , DATE_PART('days',
               DATE_TRUNC('month', date) + INTERVAL '1 month' - INTERVAL '1 day'
           ) AS days_in_month
@@ -117,30 +147,48 @@ WITH base AS (
 SELECT
       fisc_year
     , fisc_month
-
-    -- Actual production
-    , ROUND(SUM(feed_tons)::numeric, 1)   AS feed_tons
-    , ROUND(SUM(oil_tons)::numeric,  1)   AS oil_tons
-    , ROUND(SUM(meal_tons)::numeric, 1)   AS meal_tons
-
-    -- Plan: <PLAN_PER_DAY> t/day × days in month
-    , ROUND((575.0 * MAX(days_in_month))::numeric, 1)  AS plan_tons
-
-    -- Deviation (tons)
-    , ROUND((SUM(feed_tons) - 575.0 * MAX(days_in_month))::numeric, 1)  AS abw_tons
-
-    -- Deviation (%)
-    , ROUND(
-          ((SUM(feed_tons) / (575.0 * MAX(days_in_month))) - 1) * 100
-      , 1)  AS abw_pct
-
+    , ROUND(SUM(feed_tons)::numeric, 1)                                       AS feed_tons
+    , ROUND(SUM(oil_tons)::numeric,  1)                                       AS oil_tons
+    , ROUND(SUM(meal_tons)::numeric, 1)                                       AS meal_tons
+    , ROUND((575.0 * MAX(days_in_month))::numeric, 1)                         AS plan_tons
+    , ROUND((SUM(feed_tons) - 575.0 * MAX(days_in_month))::numeric, 1)       AS abw_tons
+    , ROUND(((SUM(feed_tons) / (575.0 * MAX(days_in_month))) - 1) * 100, 1)  AS abw_pct
 FROM base
 GROUP BY fisc_year, fisc_month
 ORDER BY fisc_year, fisc_month
 ```
 
-**Adjust**: replace `575.0` with actual plan/day, `your_schema.your_table` with
-your table, and add/remove metric columns as needed.
+### With totals row (UNION ALL)
+
+To show a Σ Gesamt footer row, add a UNION ALL. The marker `'99 Gesamt'`
+sorts last alphabetically. Detect it in the template with
+`{{#if (eq fisc_month "99 Gesamt")}}`.
+
+```sql
+WITH monthly AS (
+    -- ... same as basic query above ...
+)
+
+SELECT * FROM monthly
+
+UNION ALL
+
+SELECT
+      MAX(fisc_year)                                                      AS fisc_year
+    , '99 Gesamt'                                                         AS fisc_month
+    , ROUND(SUM(feed_tons)::numeric,  1)                                  AS feed_tons
+    , ROUND(SUM(oil_tons)::numeric,   1)                                  AS oil_tons
+    , ROUND(SUM(meal_tons)::numeric,  1)                                  AS meal_tons
+    , ROUND(SUM(plan_tons)::numeric,  1)                                  AS plan_tons
+    , ROUND(SUM(abw_tons)::numeric,   1)                                  AS abw_tons
+    , ROUND(((SUM(feed_tons) / NULLIF(SUM(plan_tons), 0)) - 1) * 100, 1) AS abw_pct
+FROM monthly
+
+ORDER BY fisc_month
+```
+
+**Adjust**: replace `575.0` with actual plan/day, `your_schema.your_table`
+with your table, and add/remove metric columns as needed.
 
 ---
 
@@ -150,15 +198,15 @@ your table, and add/remove metric columns as needed.
 - Dimension: `fisc_month`
 - Metrics: `feed_tons` (SUM), `plan_tons` (SUM), `abw_tons` (SUM),
   `abw_pct` (AVG), `oil_tons` (SUM), `meal_tons` (SUM)
-- Do **not** add `feed_class` or any string column as a metric — it becomes
-  `COUNT_DISTINCT(feed_class)` which is useless
+- Do **not** add string columns as metrics — they become `COUNT_DISTINCT(col)`
 - CSS Styles field: **leave empty**
 
 ---
 
 ## Step 3 — Handlebars Template
 
-Copy this proven template. Adapt column names, colors, and grid columns as needed.
+Proven production template (v4) with Σ Gesamt totals row.
+All `{{#if}}` blocks are inline only — never wrapping HTML elements.
 
 ```handlebars
 <style>
@@ -170,13 +218,16 @@ Copy this proven template. Adapt column names, colors, and grid columns as neede
 .tbl-head,.tbl-row{display:grid;grid-template-columns:120px 1fr 1fr 1fr 1fr 1fr 1fr;}
 .tbl-head{background:#f8f9fb;border-bottom:2px solid #e8ecf1;}
 .tbl-row{border-bottom:1px solid #f0f2f5;}
-.tbl-row:last-child{border-bottom:none;}
+.tbl-row:hover .c{background:#fafbfc;}
+.tbl-row.tbl-total{border-top:2px solid #c7d2fe;background:#eef2ff;border-bottom:none;}
+.tbl-row.tbl-total:hover .c{background:#eef2ff;}
 .tbl-head .c{padding:11px 14px;font-size:11px;font-weight:600;color:#6b7694;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;display:flex;align-items:center;justify-content:flex-end;}
 .tbl-head .c:first-child{justify-content:flex-start;}
 .tbl-row .c{padding:12px 14px;display:flex;align-items:center;justify-content:flex-end;white-space:nowrap;}
 .tbl-row .c:first-child{justify-content:flex-start;}
-.tbl-row:hover .c{background:#fafbfc;}
+.tbl-row.tbl-total .c{padding:13px 14px;font-weight:700;}
 .month{font-weight:600;font-size:13.5px;}
+.total-label{font-weight:700;font-size:12px;color:#4361ee;text-transform:uppercase;letter-spacing:.5px;}
 .fv{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;}
 .fv.up{color:#16a34a;}
 .fv.dn{color:#dc2626;}
@@ -212,25 +263,24 @@ Copy this proven template. Adapt column names, colors, and grid columns as neede
       <div class="c">Meal</div>
     </div>
     {{#each data}}
-    <div class="tbl-row">
-      <div class="c"><span class="month">{{fisc_month}}</span></div>
+    <div class="tbl-row {{#if (eq fisc_month "99 Gesamt")}}tbl-total{{/if}}">
+      <div class="c">
+        <span class="{{#if (eq fisc_month "99 Gesamt")}}total-label{{else}}month{{/if}}">{{#if (eq fisc_month "99 Gesamt")}}&#931; Gesamt{{else}}{{fisc_month}}{{/if}}</span>
+      </div>
       <div class="c">
         <span class="fv {{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}up{{else}}dn{{/if}}">{{this.[SUM(feed_tons)]}} t</span>
       </div>
-      <div class="c"><span class="pv">{{this.[SUM(plan_tons)]}} t</span></div>
       <div class="c">
-        {{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}
-        <div class="abw-wrap"><span class="arr up">&#9650;</span><span class="abw-t up">+{{this.[SUM(abw_tons)]}} t</span></div>
-        {{else}}
-        <div class="abw-wrap"><span class="arr dn">&#9660;</span><span class="abw-t dn">{{this.[SUM(abw_tons)]}} t</span></div>
-        {{/if}}
+        <span class="pv">{{this.[SUM(plan_tons)]}} t</span>
       </div>
       <div class="c">
-        {{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}
-        <span class="abw-p up">+{{this.[AVG(abw_pct)]}} %</span>
-        {{else}}
-        <span class="abw-p dn">{{this.[AVG(abw_pct)]}} %</span>
-        {{/if}}
+        <div class="abw-wrap">
+          <span class="arr {{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}up{{else}}dn{{/if}}">{{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}&#9650;{{else}}&#9660;{{/if}}</span>
+          <span class="abw-t {{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}up{{else}}dn{{/if}}">{{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}+{{/if}}{{this.[SUM(abw_tons)]}} t</span>
+        </div>
+      </div>
+      <div class="c">
+        <span class="abw-p {{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}up{{else}}dn{{/if}}">{{#if (gte this.[SUM(feed_tons)] this.[SUM(plan_tons)])}}+{{/if}}{{this.[AVG(abw_pct)]}} %</span>
       </div>
       <div class="c"><span class="num">{{this.[SUM(oil_tons)]}} t</span></div>
       <div class="c"><span class="num">{{this.[SUM(meal_tons)]}} t</span></div>
@@ -257,6 +307,7 @@ Copy this proven template. Adapt column names, colors, and grid columns as neede
 | Colors (green/red) | `.up` and `.dn` classes in `<style>` |
 | Title / badge text | `.mc-title` and `.mc-badge` spans |
 | Font | `font-family` in `.mc` class |
+| Totals row label | `'99 Gesamt'` in SQL + `{{#if (eq fisc_month "99 Gesamt")}}` in template |
 
 ---
 
@@ -264,7 +315,7 @@ Copy this proven template. Adapt column names, colors, and grid columns as neede
 
 `eq`, `ne`, `lt`, `gt`, `lte`, `gte`, `and`, `or`, `not`, `includes`, `typeof`
 
-These are built-in — no custom registration needed.
+Built-in — no custom registration needed. `{{#unless}}` is **not** supported.
 
 ---
 
@@ -273,9 +324,11 @@ These are built-in — no custom registration needed.
 | Symptom | Cause | Fix |
 |---|---|---|
 | CSS appears as raw text | CSS Styles field not empty | Clear the CSS Styles field |
-| `<style>` content visible | `HTML_SANITIZATION` not set | Add `HTML_SANITIZATION = False` to superset_config.py + restart |
+| `<style>` content visible as text | `HTML_SANITIZATION` not set | Add `HTML_SANITIZATION = False` to superset_config.py + restart |
 | Table rows show as raw HTML | `<table>` used | Replace with CSS Grid divs |
 | Values empty (`{{feed_tons}} t`) | Wrong column name | Use `{{this.[SUM(feed_tons)]}}` bracket notation |
-| Conditional CSS class broken | `feed_class` string col used | Use `{{#if (gte ...)}}` numeric comparison instead |
+| Content inside `{{#if}}` shows as raw HTML | `{{#if}}` wrapping `<div>`/`<span>` elements | Move `{{#if}}` inside attributes and text nodes only |
+| `{{#unless}}` block renders as raw HTML | `{{#unless}}` not supported | Restructure using `{{#if (ne ...)}}...{{else}}...{{/if}}` |
+| Conditional CSS class broken | String column used as metric | Use `{{#if (gte ...)}}` numeric comparison instead |
 | HTML after comment shows as text | HTML comment in template | Remove all `<!-- ... -->` comments |
-| Inline style div missing | `style="..."` on div stripped | Use a CSS class instead |
+| Div with inline style disappears | `style="..."` on div stripped | Use a CSS class instead |
